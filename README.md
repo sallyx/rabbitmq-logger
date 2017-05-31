@@ -18,7 +18,7 @@ sallyx/rabbitmq-logger requires PHP 5.4 or higher.
 - [Kdyby/RabbitMq](https://github.com/Kdyby/RabbitMq)
 - [php-amqplib](https://github.com/videlalvaro/php-amqplib)
 
-### Suggest
+### Suggests
 
 If you want to use ConsumerExtension to save logs into database:
 
@@ -33,10 +33,10 @@ If you want to use ConsumerExtension to provide Grid to show saved messages:
 The best way to install sallyx/rabbitmq-logger is using  [Composer](http://getcomposer.org/):
 
 ```sh
-$ composer require sallyx/rabbitmq-logger
-$ composer require kdyby/console
-$ composer require kdyby/doctrine
-$ composer require ublaboo/datagrid
+composer require sallyx/rabbitmq-logger
+composer require kdyby/console
+composer require kdyby/doctrine
+composer require ublaboo/datagrid
 ```
 
 ### Configuration
@@ -101,7 +101,7 @@ doctrine:
     user: petr
     password: xxx
     dbname: databasename
-    driver: pdo_pgsql # mysql
+    driver: pdo_pgsql # pdo_mysql
 ```
 This is the default configuration for ConsumerExtension:
 
@@ -139,5 +139,60 @@ rabbitmqLoggerConsumer:
         secret: xxx
     ....
 ```
+## Setup
 
-## Usage
+You have to create exchange for RabbitMqLoggerExtension and queue for ConsumerExtension.
+If you want to use ConsumerExtension to save messages to database, you also have to create the schema and table.
+
+If you have installed  Kdyby/Console, you can use  *rabbitmq:setup-fabric* command from Kdyby/RabbitMq extension to setup exchange and queue:
+
+```sh
+php www/index.php  rabbitmq:setup-fabric
+```
+
+To create the database table, you can use [structure-psql.sql](src/setup/doctrine/structure-psql.sql) for Postgresql
+and [structure-psql.sql](src/setup/doctrine/structure-mysql.sql) for Mysql/MariaDB.
+
+## Using RabbitMqLoggerExtension
+
+No futher action needed. Your project should log messages into rabbitmq exhange as configured.
+
+## Using ConsumerExtension
+
+### Using Console
+
+If you installed Kdyby/Console extension, you can use this commands:
+
+- **rabbitmqLoggerConsumer:queue** to add or delete other queues to exchange.
+- **rabbitmqLoggerConsumer:list** to list and remove messages from queue.
+- **rabbitmqLoggerConsumer:save** to list, save messages to database and remove from queue (Kdyby/Doctine extension needed).
+
+While **rabbitmqLoggerConsumer:save** takes messages from queue described in configuration, 
+**rabbitmqLoggerConsumer:list** require queue name as argument to avoid to accidentally remove message from queue.
+You can use **rabbitmqLoggerConsumer:queue** to create new queue for *spying*.
+
+```sh
+php www/index.php rabbitmqLoggerConsumer:queue spy-whats-going-on       # create queue
+php www/index.php rabbitmqLoggerConsumer:list spy-whats-going-on        # print message on console and remove if from queue
+....
+php www/index.php rabbitmqLoggerConsumer:queue spy-whats-going-on -d    # delete queue
+```
+
+### Using Grid
+
+In the presenter:
+
+```php
+use Sallyx\RabbitMqLogger\Controls\Doctrine\GridFactory;
+...
+
+   public function __construct(GridFactory $factory) {
+        $this->gridFactory = $factory;
+   }
+
+    public function createComponentGrid($name) {
+        return $this->gridFactory->create();
+    }
+```
+
+You need to add assets as described on https://ublaboo.org/datagrid/ page.
