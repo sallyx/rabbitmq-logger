@@ -5,7 +5,7 @@ Log error and exceptions int rabbitmq exchange.
 
 Rabbitmq Logger provides two extensions for [Nette Framework](https://github.com/nette/nette).
 
-- **RabbitMqLoggerExtension** for logging errors/exceptions into rabbit exange. You should use this extension on all projects where you want to log error messages to rabbitmq.
+- **RabbitMqLoggerExtension** for logging errors/exceptions into rabbitmq exange. You should use this extension on all projects where you want to log error messages to rabbitmq.
 - **ConsumerExtension** for getting messages from queue and optionally save them into database using doctrine 2. It also provide grid to show the saved messages. You should use this extension with an internal application to manage saved messages.
 
 ## Installation
@@ -151,7 +151,7 @@ php www/index.php  rabbitmq:setup-fabric
 ```
 
 To create the database table, you can use [structure-psql.sql](src/setup/doctrine/structure-psql.sql) for Postgresql
-and [structure-psql.sql](src/setup/doctrine/structure-mysql.sql) for Mysql/MariaDB.
+and [structure-mysql.sql](src/setup/doctrine/structure-mysql.sql) for Mysql/MariaDB.
 
 ## Using RabbitMqLoggerExtension
 
@@ -168,11 +168,11 @@ If you installed Kdyby/Console extension, you can use this commands:
 - **rabbitmqLoggerConsumer:save** to list, save messages to database and remove from queue (Kdyby/Doctine extension needed).
 
 While **rabbitmqLoggerConsumer:save** takes messages from queue described in configuration, 
-**rabbitmqLoggerConsumer:list** require queue name as argument to avoid to accidentally remove message from queue.
-You can use **rabbitmqLoggerConsumer:queue** to create new queue for *spying*.
+**rabbitmqLoggerConsumer:list** require queue name as argument to avoid accidentally removing message from queue.
+You can use **rabbitmqLoggerConsumer:queue** to create new queue.
 
 ```sh
-php www/index.php rabbitmqLoggerConsumer:queue spy-whats-going-on       # create queue
+php www/index.php rabbitmqLoggerConsumer:queue spy-whats-going-on exception  # create queue for 'exception' routing key
 php www/index.php rabbitmqLoggerConsumer:list spy-whats-going-on        # print message on console and remove if from queue
 ....
 php www/index.php rabbitmqLoggerConsumer:queue spy-whats-going-on -d    # delete queue
@@ -180,7 +180,7 @@ php www/index.php rabbitmqLoggerConsumer:queue spy-whats-going-on -d    # delete
 
 ### Using Grid
 
-In the presenter:
+In a presenter:
 
 ```php
 use Sallyx\RabbitMqLogger\Controls\Doctrine\GridFactory;
@@ -193,6 +193,11 @@ use Sallyx\RabbitMqLogger\Controls\Doctrine\GridFactory;
     public function createComponentGrid($name) {
         return $this->gridFactory->create();
     }
+```
+In latte:
+
+```php
+{control grid}
 ```
 
 You need to add assets as described on https://ublaboo.org/datagrid/ page.
