@@ -9,7 +9,8 @@
 		}
 	],
 	"require": {
-		"php": ">=5.4.0"
+		"php": ">=5.4.0",
+		"Kdyby/RabbitMq" : "^1.1"
 	},
 	"suggest": {
 		"Kdyby/Doctrine" : "Allows save messages into database",
