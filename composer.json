@@ -1,0 +1,23 @@
+{
+	"name": "sallyx/rabbitmq-logger",
+	"description": "Log error and exceptions int rabbitmq exchange.",
+	"homepage": "http://github.org/sallyx/rabbitmq-logger",
+	"authors": [
+		{
+			"name": "Petr Bilek",
+			"homepage": "http://www.sallyx.org"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0"
+	},
+	"suggest": {
+		"Kdyby/Doctrine" : "Allows save messages into database",
+		"Kdyby/Console" : "Allows use console commands to consume messages",
+		"ublaboo/datagrid" : "Needed for datagrid component"
+	},
+	"autoload": {
+		"classmap": ["src/"]
+	},
+	"minimum-stability": "stable"
+}
