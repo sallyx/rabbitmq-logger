@@ -37,7 +37,7 @@ class GridFactory implements IGridFactory {
     public function create() {
 	$ds = $this->em->createQueryBuilder()
 		->select('message')
-		->from(NetteExceptionsLog::class, 'message');
+		->from('Sallyx\RabbitMqLogger\Model\Doctrine\Entity\NetteExceptionsLog', 'message');
 
 	$grid = new DataGrid(NULL, 'rabbit-mq-logger-grid');
 	$grid->setDataSource($ds);
@@ -91,7 +91,7 @@ class GridFactory implements IGridFactory {
     }
 
     public function handleDelete($id) {
-	$message = $this->em->find(NetteExceptionsLog::class, $id);
+	$message = $this->em->find('Sallyx\RabbitMqLogger\Model\Doctrine\Entity\NetteExceptionsLog', $id);
 	$this->em->remove($message);
 	$this->em->flush();
     }
