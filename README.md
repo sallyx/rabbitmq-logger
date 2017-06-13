@@ -201,3 +201,7 @@ In latte:
 ```
 
 You need to add assets as described on https://ublaboo.org/datagrid/ page.
+
+Result:
+
+![Ublaboo datagrid](assets/ublaboo-grid-thumb.png)
