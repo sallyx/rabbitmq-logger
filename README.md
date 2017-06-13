@@ -135,7 +135,7 @@ To use this in the grid, add this to ConsumerExtension configuration:
 ```yml
 rabbitmqLoggerConsumer:
     exceptionFileRoute:
-        route: get-tracy-exception-file2
+        route: get-tracy-exception-file
         secret: xxx
     ....
 ```
@@ -167,9 +167,9 @@ If you installed Kdyby/Console extension, you can use this commands:
 - **rabbitmqLoggerConsumer:list** to list and remove messages from queue.
 - **rabbitmqLoggerConsumer:save** to list, save messages to database and remove from queue (Kdyby/Doctine extension needed).
 
-While **rabbitmqLoggerConsumer:save** takes messages from queue described in configuration, 
-**rabbitmqLoggerConsumer:list** require queue name as argument to avoid accidentally removing message from queue.
-You can use **rabbitmqLoggerConsumer:queue** to create new queue.
+While *rabbitmqLoggerConsumer:save* takes messages from queue described in configuration, 
+*rabbitmqLoggerConsumer:list* require queue name as argument to avoid accidentally removing message from queue.
+You can use *rabbitmqLoggerConsumer:queue* to create new queue.
 
 ```sh
 php www/index.php rabbitmqLoggerConsumer:queue spy-whats-going-on exception  # create queue for 'exception' routing key

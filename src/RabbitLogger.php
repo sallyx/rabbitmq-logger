@@ -124,7 +124,7 @@ class RabbitLogger implements ILogger {
 	$routingKey = $priority;
 	$exOpt = $this->producer->getExchangeOptions();
 	if ($exOpt['type'] === 'topic') {
-	    $routingKey .= "." . $guid;
+	    $routingKey .= "." . $this->guid;
 	}
 
 	$this->producer->publish(json_encode($message), $routingKey);
