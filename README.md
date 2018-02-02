@@ -68,10 +68,11 @@ This is the default configuration for RabbitMqLoggerExtension:
 
 ```yml
 rabbitmqLoggerExt:
+    rabbitmqEnabled: true
     rabbitmqExtensionName: rabbitmq
-    guid: rabbitmq-logger
+    guid: rabbitmq-logger                # global id of your site (use whatever you want)
     producer:
-        connection: default # Kdyby/RabbitMq default connection
+        connection: default              # Kdyby/RabbitMq default connection
         exchange:
             name: nette-log-exchange
             type: fanout
@@ -109,11 +110,11 @@ This is the default configuration for ConsumerExtension:
 rabbitmqLoggerConsumer:
     consumerName: rabbitLogger
     consumer:
-        connection: default               # Kdyby/RabbitMq default connection
+        connection: default                   # Kdyby/RabbitMq default connection
         queue:
             name: nette-log-queue
         exchange:
-            name: my-fancy-nette-log-exchange # the same as for RabbitMqLoggerExtension
+            name: nette-log-exchange          # the same as for RabbitMqLoggerExtension
             type: fanout                      # the same as for RabbitMqLoggerExtension
     manager: Sallyx\RabbitMqLogger\Model\Doctrine\Manager
 ```
@@ -173,7 +174,7 @@ You can use *rabbitmqLoggerConsumer:queue* to create new queue.
 
 ```sh
 php www/index.php rabbitmqLoggerConsumer:queue spy-whats-going-on exception  # create queue for 'exception' routing key
-php www/index.php rabbitmqLoggerConsumer:list spy-whats-going-on        # print message on console and remove if from queue
+php www/index.php rabbitmqLoggerConsumer:list spy-whats-going-on        # print message and remove it from queue
 ....
 php www/index.php rabbitmqLoggerConsumer:queue spy-whats-going-on -d    # delete queue
 ```

@@ -14,6 +14,7 @@ class RabbitMqLoggerExtension extends CompilerExtension implements IProducersPro
 	'rabbitmqExtensionName' => 'rabbitmq',
 	'producerName' => 'rabbitLogger',
 	'guid' => 'rabbitmq-logger',
+	'rabbitmqEnabled' => true,
 	'exceptionFileRoute' => array(
 	    'route' => 'get-tracy-exception-file',
 	    'secret' => null
@@ -46,8 +47,9 @@ class RabbitMqLoggerExtension extends CompilerExtension implements IProducersPro
 	    $builder->removeDefinition('tracy.logger');
 	}
 	$producerLink = '@' . $config['rabbitmqExtensionName'] . '.producer.' . $config['producerName'];
+	$rabbitmqEnabled = $config['rabbitmqEnabled'];
 	$builder->addDefinition('tracy.logger')
-		->setClass('Sallyx\RabbitMqLogger\RabbitLogger', ['@http.request', $producerLink, $config['guid']]);
+		->setClass('Sallyx\RabbitMqLogger\RabbitLogger', ['@http.request', $producerLink, $config['guid'], $rabbitmqEnabled]);
     }
 
     /**
