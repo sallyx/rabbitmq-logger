@@ -1,7 +1,7 @@
 # Rabbitmq Logger
 Log error and exceptions int rabbitmq exchange.
 
-[![Latest stable](https://img.shields.io/packagist/v/kdyby/rabbitmq.svg)](https://packagist.org/packages/sallyx/rabbitmq-logger)
+[![Latest stable](https://img.shields.io/packagist/v/sallyx/rabbitmq-logger.svg)](https://packagist.org/packages/sallyx/rabbitmq-logger)
 
 Rabbitmq Logger provides two extensions for [Nette Framework](https://github.com/nette/nette).
 
